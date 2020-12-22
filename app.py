@@ -9,12 +9,13 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
 from fsm import TocMachine
 from utils import send_text_message
-
+from utils import send_text_message, send_button_message
+from linebot.models import ImageCarouselColumn, URITemplateAction, MessageTemplateAction
 load_dotenv()
 
 
 machine = TocMachine(
-    states=["user", "state1", "state2","restart","age","beginner","medium","highlevel","bserve","mserve","hserve","bfinish","mfinish","hfinish","bserved","hserved","mserved","bservedtop","bservedunder","bservedside","hservedtop","hservedside","hservedunder","mservedtop","mservedunder","mservedside","bkiller","mkiller","hkiller"],
+    states=["user", "state1","age","beginner","medium","highlevel","bserve","mserve","hserve","bfinish","mfinish","hfinish","bserved","hserved","mserved","bservedtop","bservedunder","bservedside","hservedtop","hservedside","hservedunder","mservedtop","mservedunder","mservedside","bkiller","mkiller","hkiller"],
     transitions=[
         {
             "trigger": "advance",
@@ -22,12 +23,12 @@ machine = TocMachine(
             "dest": "state1",
             "conditions": "is_going_to_state1",
         },
-        {
-            "trigger": "advance",
-            "source": "user",
-            "dest": "state2",
-            "conditions": "is_going_to_state2",
-        },
+       # {
+       #     "trigger": "advance",
+        #    "source": "user",
+        #    "dest": "state2",
+       #     "conditions": "is_going_to_state2",
+       # },
         {
             "trigger": "advance",
             "source": "user",
@@ -243,7 +244,7 @@ machine = TocMachine(
             "dest": "state1",
             "conditions": "is_going_to_state1",
         },
-        {"trigger": "go_back", "source": ["state1", "state2","age","beginner","medium","highlevel","bserve","mserve","hserve"], "dest": "user"},
+        {"trigger": "go_back", "source": ["state1"], "dest": "user"},
     ],
     initial="user",
     auto_transitions=False,
@@ -319,8 +320,21 @@ def webhook_handler():
         print(f"REQUEST BODY: \n{body}")
         response = machine.advance(event)
         if response == False:
+
             if machine.state == 'user':
-                send_text_message(event.reply_token, '想要進入桌球世界嗎?想要打 "想要" ')
+                text='想要進入桌球世界嗎?'
+                btn = [
+                            MessageTemplateAction(
+                                label = '想要',
+                                text ='想要'
+                            ),
+                            MessageTemplateAction(
+                                label = '離開',
+                                text = '離開'
+                            ),
+                        ]
+                send_button_message(event.reply_token,text, btn)
+                #send_text_message(event.reply_token, '想要進入桌球世界嗎?想要打 "想要" ')
             else:
                 send_text_message(event.reply_token, "Not Entering any State")
 

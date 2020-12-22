@@ -13,6 +13,9 @@ class TocMachine(GraphMachine):
     def is_going_to_age(self, event):
         text = event.message.text
         return text.lower() == '想要'
+    #def is_going_to_state2(self, event):
+    #    text = event.message.text
+      #  return text.lower() == "go to state2"
     
         
     
@@ -20,10 +23,6 @@ class TocMachine(GraphMachine):
     def is_going_to_state1(self, event):
         text = event.message.text
         return text.lower() == "離開"
-
-    def is_going_to_state2(self, event):
-        text = event.message.text
-        return text.lower() == "go to state2"
     def is_going_to_beginner(self, event):
         text = event.message.text
         return text.lower() =='初學者'
@@ -105,14 +104,13 @@ class TocMachine(GraphMachine):
         print("I'm entering state1")
 
         reply_token = event.reply_token
-        send_text_message(reply_token, "您已經離開囉如果要繼續請輸入任意文字")
+        send_text_message(reply_token, "您已經離開囉!!如果要繼續請輸入任意文字")
         self.go_back(event)
-    def on_enter_state2(self, event):
-        print("I'm entering state2")
+    #def on_enter_state2(self, event):
+     #   print("I'm entering state2")
 
-        reply_token = event.reply_token
-        send_text_message(reply_token, "Trigger state2")
-        self.go_back()
+      #  send_button_message(event.reply_token,text, btn)
+
 
     def on_enter_age(self, event):
         print("I'm entering age")
@@ -376,8 +374,8 @@ class TocMachine(GraphMachine):
         print("Leaving state1")
     def on_exit_state2(self,event):
         print("Leaving state2")
-    def on_exit_restart(self,event):
-        print("Leaving restart")
+   # def on_exit_restart(self,event):
+       # print("Leaving restart")
     def on_exit_age(self,event):
         print("Leaving age")
     def on_exit_beginner(self,event):
