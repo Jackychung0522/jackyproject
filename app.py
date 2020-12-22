@@ -14,7 +14,7 @@ load_dotenv()
 
 
 machine = TocMachine(
-    states=["user", "state1", "state2"],
+    states=["user", "state1", "state2","restart","age","beginner","medium","highlevel","bserve","mserve","hserve","bfinish","mfinish","hfinish","bserved","hserved","mserved","bservedtop","bservedunder","bservedside","hservedtop","hservedside","hservedunder","mservedtop","mservedunder","mservedside","bkiller","mkiller","hkiller"],
     transitions=[
         {
             "trigger": "advance",
@@ -28,7 +28,222 @@ machine = TocMachine(
             "dest": "state2",
             "conditions": "is_going_to_state2",
         },
-        {"trigger": "go_back", "source": ["state1", "state2"], "dest": "user"},
+        {
+            "trigger": "advance",
+            "source": "user",
+            "dest": "age",
+            "conditions": "is_going_to_age",
+        },
+
+        {
+            "trigger": "advance",
+            "source": "age",
+            "dest": "beginner",
+            "conditions": "is_going_to_beginner",
+        },
+        {
+            "trigger": "advance",
+            "source": "age",
+            "dest": "medium",
+            "conditions": "is_going_to_medium",
+        },
+        {
+            "trigger": "advance",
+            "source": "age",
+            "dest": "highlevel",
+            "conditions": "is_going_to_highlevel",
+        },
+        {
+            "trigger": "advance",
+            "source": "beginner",
+            "dest": "bserve",
+            "conditions": "is_going_to_bserve",
+        },
+        {
+            "trigger": "advance",
+            "source": "medium",
+            "dest": "mserve",
+            "conditions": "is_going_to_mserve",
+        },
+        {
+            "trigger": "advance",
+            "source": "highlevel",
+            "dest": "hserve",
+            "conditions": "is_going_to_hserve",
+        },
+        {
+            "trigger": "advance",
+            "source": ["bserve","bservedside","bservedtop","bservedunder","bkiller"],
+            "dest": "bfinish",
+            "conditions": "is_going_to_bfinish",
+        },
+        {
+            "trigger": "advance",
+            "source": ["mserve","mservedside","mservedtop","mservedunder","mkiller"],
+            "dest": "mfinish",
+            "conditions": "is_going_to_mfinish",
+        },
+        {
+            "trigger": "advance",
+            "source": ["hserve","hservedside","hservedtop","hservedunder","hkiller"],
+            "dest": "hfinish",
+            "conditions": "is_going_to_hfinish",
+        },
+
+        {
+            "trigger": "advance",
+            "source": "bfinish",
+            "dest": "bserve",
+            "conditions": "is_going_to_bserve",
+        },
+        {
+            "trigger": "advance",
+            "source": "bfinish",
+            "dest": "bserved",
+            "conditions": "is_going_to_bserved",
+        },
+        {
+            "trigger": "advance",
+            "source": "bfinish",
+            "dest": "bkiller",
+            "conditions": "is_going_to_bkiller",
+        },
+        {
+            "trigger": "advance",
+            "source": "mfinish",
+            "dest": "mserved",
+            "conditions": "is_going_to_mserved",
+        },
+        {
+            "trigger": "advance",
+            "source": "mfinish",
+            "dest": "mserve",
+            "conditions": "is_going_to_mserve",
+        },
+        {
+            "trigger": "advance",
+            "source": "mfinish",
+            "dest": "mkiller",
+            "conditions": "is_going_to_mkiller",
+        },
+        {
+            "trigger": "advance",
+            "source": "hfinish",
+            "dest": "hserved",
+            "conditions": "is_going_to_hserved",
+        },
+        {
+            "trigger": "advance",
+            "source": "hfinish",
+            "dest": "hserve",
+            "conditions": "is_going_to_hserve",
+        },
+        {
+            "trigger": "advance",
+            "source": "hfinish",
+            "dest": "hkiller",
+            "conditions": "is_going_to_hkiller",
+        },
+        {
+            "trigger": "advance",
+            "source": "beginner",
+            "dest": "bserved",
+            "conditions": "is_going_to_bserved",
+        },
+        {
+            "trigger": "advance",
+            "source": "medium",
+            "dest": "mserved",
+            "conditions": "is_going_to_mserved",
+        },
+        {
+            "trigger": "advance",
+            "source": "highlevel",
+            "dest": "hserved",
+            "conditions": "is_going_to_hserved",
+        },
+        {
+            "trigger": "advance",
+            "source": "beginner",
+            "dest": "bkiller",
+            "conditions": "is_going_to_bkiller",
+        },
+        {
+            "trigger": "advance",
+            "source": "medium",
+            "dest": "mkiller",
+            "conditions": "is_going_to_mkiller",
+        },
+        {
+            "trigger": "advance",
+            "source": "highlevel",
+            "dest": "hkiller",
+            "conditions": "is_going_to_hkiller",
+        },
+        {
+            "trigger": "advance",
+            "source": "bserved",
+            "dest": "bservedside",
+            "conditions": "is_going_to_bservedside",
+        },
+        {
+            "trigger": "advance",
+            "source": "bserved",
+            "dest": "bservedtop",
+            "conditions": "is_going_to_bservedtop",
+        },
+        {
+            "trigger": "advance",
+            "source": "bserved",
+            "dest": "bservedunder",
+            "conditions": "is_going_to_bservedunder",
+        },
+        {
+            "trigger": "advance",
+            "source": "mserved",
+            "dest": "mservedside",
+            "conditions": "is_going_to_mservedside",
+        },
+        {
+            "trigger": "advance",
+            "source": "mserved",
+            "dest": "mservedtop",
+            "conditions": "is_going_to_mservedtop",
+        },
+        {
+            "trigger": "advance",
+            "source": "mserved",
+            "dest": "mservedunder",
+            "conditions": "is_going_to_mservedunder",
+        },
+        {
+            "trigger": "advance",
+            "source": "hserved",
+            "dest": "hservedside",
+            "conditions": "is_going_to_hservedside",
+        },
+        {
+            "trigger": "advance",
+            "source": "hserved",
+            "dest": "hservedtop",
+            "conditions": "is_going_to_hservedtop",
+        },
+        {
+            "trigger": "advance",
+            "source": "hserved",
+            "dest": "hservedunder",
+            "conditions": "is_going_to_hservedunder",
+        },
+
+
+
+        {
+            "trigger": "advance",
+            "source": ["bfinish","hfinish","mfinish"],
+            "dest": "state1",
+            "conditions": "is_going_to_state1",
+        },
+        {"trigger": "go_back", "source": ["state1", "state2","age","beginner","medium","highlevel","bserve","mserve","hserve"], "dest": "user"},
     ],
     initial="user",
     auto_transitions=False,
@@ -104,7 +319,11 @@ def webhook_handler():
         print(f"REQUEST BODY: \n{body}")
         response = machine.advance(event)
         if response == False:
-            send_text_message(event.reply_token, "Not Entering any State")
+            if machine.state == 'user':
+                send_text_message(event.reply_token, '想要進入桌球世界嗎?想要打 "想要" ')
+            else:
+                send_text_message(event.reply_token, "Not Entering any State")
+
 
     return "OK"
 
@@ -118,3 +337,4 @@ def show_fsm():
 if __name__ == "__main__":
     port = os.environ.get("PORT", 8000)
     app.run(host="0.0.0.0", port=port, debug=True)
+    machine.get_graph().draw('my_state_diagram.png' ,prog='dot')
